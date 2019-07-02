@@ -68,8 +68,20 @@ const abi = [
         "constant": false,
         "inputs": [
             {
-                "name": "_monthsworked",
-                "type": "uint256"
+                "name": "_monthhired",
+                "type": "string"
+            },
+            {
+                "name": "_monthleft",
+                "type": "string"
+            },
+            {
+                "name": "_yearhired",
+                "type": "string"
+            },
+            {
+                "name": "_yearleft",
+                "type": "string"
             },
             {
                 "name": "_position",
@@ -390,7 +402,7 @@ const abi = [
         "outputs": [
             {
                 "name": "",
-                "type": "uint256"
+                "type": "string"
             },
             {
                 "name": "",
@@ -448,7 +460,7 @@ const abi = [
         "outputs": [
             {
                 "name": "",
-                "type": "uint256"
+                "type": "string"
             },
             {
                 "name": "",
@@ -554,7 +566,7 @@ const abi = [
 ];
 
 //constant that stores the address of the contract
-const address ='0x6f17b956bfa573ba361c6f4b5dc3b47ab617e504';
+const address ='0xa598e2c63f5dd5e6c16d3a0eb6fbd25dbb4123b8';
 
 const instance = new web3.eth.Contract(abi, address);
 

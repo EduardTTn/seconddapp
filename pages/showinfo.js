@@ -128,7 +128,7 @@ class ShowInfo extends Component {
                         <Segment inverted color="blue" style={{textalign: 'center'}}><h2>Jobs</h2></Segment>
                         <Table.Row>
                             <Table.HeaderCell> Company</Table.HeaderCell>
-                            <Table.HeaderCell>Months Worked</Table.HeaderCell>
+                            <Table.HeaderCell>Period Worked</Table.HeaderCell>
                             <Table.HeaderCell>Position</Table.HeaderCell>
                             <Table.HeaderCell>Validity</Table.HeaderCell>
                         </Table.Row>

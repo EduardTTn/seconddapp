@@ -17,10 +17,11 @@ class AddJob extends Component {
             errorMessage: '',
             position: '',
             companyname: '',
-            monthsworked: 0,
-            SSN: 0,
+            monthhired: 0,
+            monthleft: 0,
             yearhired: 0,
-            yearleft: 0
+            yearleft: 0,
+            SSN: 0
         };
     };
 
@@ -28,6 +29,30 @@ class AddJob extends Component {
     handleAddCompanyName = event => {
         event.preventDefault();
         this.setState({companyname: event.target.value});
+        this.setState({errorMessage: ''});
+    };
+
+    handleAddMonthH = event => {
+        event.preventDefault();
+        this.setState({monthhired: event.target.value});
+        this.setState({errorMessage: ''});
+    };
+
+    handleAddMonthL = event => {
+        event.preventDefault();
+        this.setState({monthleft: event.target.value});
+        this.setState({errorMessage: ''});
+    };
+
+    handleAddYearH = event => {
+        event.preventDefault();
+        this.setState({yearhired: event.target.value});
+        this.setState({errorMessage: ''});
+    };
+
+    handleAddYearL = event => {
+        event.preventDefault();
+        this.setState({yearleft: event.target.value});
         this.setState({errorMessage: ''});
     };
 
@@ -121,7 +146,7 @@ class AddJob extends Component {
                               error={!!this.state.errorMessage} style={formstyle}>
                             <Message error header={"Notice:"} content={this.state.errorMessage}/>
                             <Form.Group inline style={{width: '60%', margin: '30px auto'}}>
-                                <Form.Field required style={{width: '90%', margin: '10px'}}>
+                                <Form.Field  style={{width: '90%', margin: '10px'}}>
                                     <Form.Input required fluid label="Position:"
                                                 style={{width: '100%'}}
                                                 value={this.state.position}
@@ -141,14 +166,43 @@ class AddJob extends Component {
                                                 type="number"
                                                 min={100000000} max={999999999} step={1}
                                     />
-                                    <Form.Input required fluid label="Months worked:"
+                                    <label style={{margin:'4%'}}><h5>Period Worked:</h5></label>
+<Form.Group>
+                                    <label style={{margin:'4%'}}>Date hired:</label>
+                                    <Form.Input required fluid label="month:"
                                                 style={{width: '100px'}}
-                                                value={parseInt(this.state.monthsworked)}
-                                                onChange={this.handleAddMonths}
+                                                value={parseInt(this.state.monthhired)}
+                                                onChange={this.handleAddMonthH}
                                                 type="number"
                                                 min={1} step={1}
                                     />
 
+                                    <Form.Input required fluid label="year:"
+                                                style={{width: '100px'}}
+                                                value={parseInt(this.state.yearhired)}
+                                                onChange={this.handleAddYearH}
+                                                type="number"
+                                                min={1} step={1}
+                                    />
+</Form.Group>
+                                <Form.Group>
+                                    <label style={{margin:'4%'}} >Date Left:</label>
+                                    <Form.Input required fluid label="month:"
+                                                style={{width: '100px'}}
+                                                value={parseInt(this.state.monthleft)}
+                                                onChange={this.handleAddMonthL}
+                                                type="number"
+                                                min={1} step={1}
+                                    />
+
+                                    <Form.Input required fluid label="year:"
+                                                style={{width: '100px'}}
+                                                value={parseInt(this.state.yearleft)}
+                                                onChange={this.handleAddYearL}
+                                                type="number"
+                                                min={1} step={1}
+                                    />
+                                </Form.Group>
                                 </Form.Field>
                             </Form.Group>
                             <Form.Field style={{textAlign: 'center', margin: '10%'}}>

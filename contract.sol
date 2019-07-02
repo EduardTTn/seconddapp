@@ -36,7 +36,7 @@ contract ResumeVerifier {
     }
 
     struct Job {
-        uint monthsworked;
+        string date;
         string companyname;
         string position;
         bool approved;
@@ -50,7 +50,6 @@ contract ResumeVerifier {
         address requester;
         uint index;
         bool verified;
-
     }
 
     constructor  () public payable {
@@ -138,10 +137,11 @@ contract ResumeVerifier {
     }
 
     //the user adds a job  to his cv and a job request to the company
-    function addJob(uint _monthsworked,  string _position, string _companyname, uint _SSN) public {
+    function addJob(string _monthhired, string _monthleft, string _yearhired, string _yearleft,  string _position, string _companyname, uint _SSN) public {
         require(useregistered[msg.sender]==true);
+        string memory date = _monthhired + "/"+_yearhired + '-' +_monthleft + "/"+ _yearleft;
         string memory name = applicantinfo[msg.sender].name;
-        JobRequest memory request = JobRequest(_monthsworked, _position, _SSN, msg.sender, indexusersjobs[msg.sender], false);
+        JobRequest memory request = JobRequest(date, _position, _SSN, msg.sender, indexusersjobs[msg.sender], false);
         Job memory job = Job(_monthsworked, _companyname, _position, false, false);
         address addr = companyname[_companyname];
         requestsJob[addr].push(request);
@@ -178,8 +178,8 @@ contract ResumeVerifier {
     }
 
     //returns information about a user's past job
-    function getJob(address _addr, uint _index) public view returns(uint, string, string, bool, bool) {
-        return(jobs[_addr][_index].monthsworked, jobs[_addr][_index].companyname,  jobs[_addr][_index].position, jobs[_addr][_index].approved, jobs[_addr][_index].denied );
+    function getJob(address _addr, uint _index) public view returns(string, string, string, bool, bool) {
+        return(jobs[_addr][_index].date, jobs[_addr][_index].companyname,  jobs[_addr][_index].position, jobs[_addr][_index].approved, jobs[_addr][_index].denied );
     }
 
     //returns the number of jobs listed by a user
@@ -223,8 +223,8 @@ contract ResumeVerifier {
     }
 
     //returns a job request for validation
-    function getJobRequest(address _addr, uint _index) public view returns (uint, string, uint, address,  uint, bool){
-        return(requestsJob[_addr][_index].monthsworked,  requestsJob[_addr][_index].position,  requestsJob[_addr][_index].SSN, requestsJob[_addr][_index].requester, requestsJob[_addr][_index].index, requestsJob[_addr][_index].verified);
+    function getJobRequest(address _addr, uint _index) public view returns (string, string, uint, address,  uint, bool){
+        return(requestsJob[_addr][_index].date,  requestsJob[_addr][_index].position,  requestsJob[_addr][_index].SSN, requestsJob[_addr][_index].requester, requestsJob[_addr][_index].index, requestsJob[_addr][_index].verified);
     }
 
     //returns the number of job requests to be validated by a company

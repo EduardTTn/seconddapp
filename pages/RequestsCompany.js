@@ -86,7 +86,7 @@ class RequestsCompany extends Component {
                         <Segment inverted color="blue" style={{textalign: 'center'}}><h2>Requests</h2></Segment>
                         <Table.Row>
                             <Table.HeaderCell> SSN</Table.HeaderCell>
-                            <Table.HeaderCell>Months Worked</Table.HeaderCell>
+                            <Table.HeaderCell>Period Worked</Table.HeaderCell>
                             <Table.HeaderCell>Position</Table.HeaderCell>
                             <Table.HeaderCell>Requester</Table.HeaderCell>
                             <Table.HeaderCell>Validate</Table.HeaderCell>
