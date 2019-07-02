@@ -43,18 +43,6 @@ class AddJob extends Component {
         this.setState({errorMessage: ''});
     };
 
-    handleAddHired = event => {
-        event.preventDefault();
-        this.setState({yearhired: event.target.value});
-        this.setState({errorMessage: ''});
-    };
-
-    handleAddLeft = event => {
-        event.preventDefault();
-        this.setState({yearleft: event.target.value});
-        this.setState({errorMessage: ''});
-    };
-
     handleAddSSN = event => {
         event.preventDefault();
         this.setState({SSN: event.target.value});
@@ -63,17 +51,15 @@ class AddJob extends Component {
 
     //once the function is called and no errors are present, it will submit a request to the contract to call the addJob function of the contract
     onSubmit = async event => {
-        if (this.state.companyname === '' || this.state.position === '' || this.state.monthsworked === 0 || this.state.SSN === 0 || this.state.yearhired === 0 || this.state.yearleft === 0) {
+        event.preventDefault();
+        if (this.state.companyname === '' || this.state.position === '' || this.state.monthsworked === 0 || this.state.SSN === 0 ) {
             this.setState({errorMessage: "Fields can't be empty"});
         } else if (this.state.SSN < 100000000 || this.state.day > 999999999) {
             this.setState({errorMessage: "Invalid SSN"});
-        } else if (this.state.yearhired > this.state.yearleft) {
-            this.setState({errorMessage: "Invalid Period"});
         } else if (this.state.errorMessage === '') {
-            event.preventDefault();
             this.setState({loading: true});
             this.setState({accounts: await web3.eth.getAccounts()});
-            await instance.methods.addJob(this.state.monthsworked, this.state.position, this.state.companyname, this.state.SSN, this.state.yearhired, this.state.yearleft).send({
+            await instance.methods.addJob(this.state.monthsworked, this.state.position, this.state.companyname, this.state.SSN).send({
                 from: this.state.accounts[0]
             });
         }
@@ -155,22 +141,7 @@ class AddJob extends Component {
                                                 type="number"
                                                 min={1} step={1}
                                     />
-                                    <Form.Input required fluid label="Year hired:"
-                                                style={{width: '100px'}}
-                                                value={parseInt(this.state.yearhired)}
-                                                onChange={this.handleAddHired}
-                                                type="number"
-                                                min={1970} max={2099}
-                                                error={!!this.state.errorMessage}
-                                    />
-                                    <Form.Input required fluid label="Year left:"
-                                                style={{width: '100px'}}
-                                                value={parseInt(this.state.yearleft)}
-                                                onChange={this.handleAddLeft}
-                                                type="number"
-                                                min={1970} max={2099} step={1}
-                                                error={!!this.state.errorMessage}
-                                    />
+
                                 </Form.Field>
                             </Form.Group>
                             <Form.Field style={{textAlign: 'center', margin: '10%'}}>

@@ -31,15 +31,11 @@ class ShowInfo extends Component {
             info: x
         });
         const y = await instance.methods.getJobCount(this.state.accounts[0]).call();
-        console.log('y', y);
-        for (let i = 0; i < y; i++) {
-            const z = await instance.methods.getJob(this.state.accounts[0], i).call();
-            this.setState({jobs: [...this.state.jobs, z]});
             for (let i = 0; i < y; i++) {
                 const z = await instance.methods.getJob(this.state.accounts[0], i).call();
                 this.setState({jobs: [...this.state.jobs, z]});
             }
-        }
+
         const z = await instance.methods.getCertificateCount(this.state.accounts[0]).call();
         for (let i = 0; i < z; i++) {
             const r = await instance.methods.getCertificate(this.state.accounts[0], i).call();
@@ -111,7 +107,6 @@ class ShowInfo extends Component {
                 <Table.Cell key={x}>{job[1].toString()}</Table.Cell>
                 <Table.Cell key={x}>{job[0].toString()}</Table.Cell>
                 <Table.Cell key={x}>{job[2].toString()}</Table.Cell>
-                <Table.Cell key={x}>{job[5].toString()}</Table.Cell>
                 <Table.Cell>{y}</Table.Cell>
             </Table.Row>];
         });

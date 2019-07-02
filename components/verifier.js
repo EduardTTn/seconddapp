@@ -82,14 +82,6 @@ const abi = [
             {
                 "name": "_SSN",
                 "type": "uint256"
-            },
-            {
-                "name": "_yearhired",
-                "type": "uint256"
-            },
-            {
-                "name": "_yearleft",
-                "type": "uint256"
             }
         ],
         "name": "addJob",
@@ -452,33 +444,6 @@ const abi = [
                 "type": "uint256"
             }
         ],
-        "name": "getJobDetails",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "_addr",
-                "type": "address"
-            },
-            {
-                "name": "_index",
-                "type": "uint256"
-            }
-        ],
         "name": "getJobRequest",
         "outputs": [
             {
@@ -495,7 +460,7 @@ const abi = [
             },
             {
                 "name": "",
-                "type": "string"
+                "type": "address"
             },
             {
                 "name": "",
@@ -520,33 +485,6 @@ const abi = [
         ],
         "name": "getJobRequestCount",
         "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "_addr",
-                "type": "address"
-            },
-            {
-                "name": "_index",
-                "type": "uint256"
-            }
-        ],
-        "name": "getJobRequestRequester",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
             {
                 "name": "",
                 "type": "uint256"
@@ -616,7 +554,7 @@ const abi = [
 ];
 
 //constant that stores the address of the contract
-const address ='0x63f71330763dbed1aeea7f42e501e5d754bc1fdf';
+const address ='0x6f17b956bfa573ba361c6f4b5dc3b47ab617e504';
 
 const instance = new web3.eth.Contract(abi, address);
 
