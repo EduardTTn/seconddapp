@@ -19,7 +19,6 @@ function SimpleSnackbar() {
         if (reason === 'clickaway') {
             return;
         }
-
         setOpen(false);
     }
 

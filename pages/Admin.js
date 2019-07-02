@@ -62,8 +62,6 @@ class Admin extends Component {
         this.setState({loading: true, errorMessage: ''});
         try {
             this.setState({accounts: await web3.eth.getAccounts()});
-
-
             await instance.methods.addCompany(this.state.companyaddress, this.state.companyname).send({
                 from: this.state.accounts[0]
             })
@@ -86,12 +84,9 @@ class Admin extends Component {
         this.setState({errorMessage2: ''});
         try {
             this.setState({accounts: await web3.eth.getAccounts()});
-
-
             await instance.methods.addInstitution(this.state.institutionaddress, this.state.institutionname).send({
                 from: this.state.accounts[0]
             })
-
         } catch (err) {
             this.setState({loading: false});
             if (this.state.institutionname === '' || this.state.institutionaddress === '') {
@@ -103,7 +98,6 @@ class Admin extends Component {
     };
 
     render() {
-        console.log('loading:', this.state.loading);
         let cardStyle = {
             width: '23%',
             margin: '100px auto'
@@ -132,11 +126,9 @@ class Admin extends Component {
         a {
           font-family: 'Arial';
         }
-      
         Card {
            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
            }
-           
         body {
          background: url("https://images.unsplash.com/photo-1511649475669-e288648b2339?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2089&q=80");
          background-repeat: no-repeat;
@@ -148,28 +140,23 @@ class Admin extends Component {
                 <Container> ...</Container>
                 <Card style={cardStyle}>
                     <label style={labelStyle}><h2>Add a Company</h2></label>
-
                     <Form className={"form-inline"} onSubmit={this.onSubmit1}
                           error={!!this.state.errorMessage1} style={formstyle}>
                         <Message error header={"Notice:"} content={this.state.errorMessage1}/>
                         <Form.Group inline style={{width: '100%', margin: '30px auto'}}>
-
                             <Form.Field required style={{width: '100%', margin: '10px'}}>
-
                                 <Form.Input required fluid label="Company Name:"
                                             style={{width: '100%'}}
                                             value={this.state.companyname}
                                             onChange={this.handleAddCompanyName}
                                             error={!!this.state.errorMessage1}
                                 />
-
                                 <Form.Input required fluid label="Company Address:"
                                             style={{width: '96.555%'}}
                                             value={this.state.companyaddress}
                                             onChange={this.handleAddCompanyAddress}
                                             error={!!this.state.errorMessage1}
                                 />
-
                             </Form.Field>
                         </Form.Group>
                         <Form.Field style={{textAlign: 'center', margin: '10%'}}>
@@ -180,24 +167,19 @@ class Admin extends Component {
                         </Form.Field>
                     </Form>
                 </Card>
-
                 <Card color="blue" style={cardStyle}>
                     <label style={labelStyle}><h2>Add an Institution</h2></label>
                     <Form className={"form-inline"} onSubmit={this.onSubmit1}
                           error={!!this.state.errorMessage2} style={formstyle}>
                         <Message error header={"Notice:"} content={this.state.errorMessage2}/>
                         <Form.Group inline style={{width: '100%', margin: '30px auto'}}>
-
                             <Form.Field required style={{width: '100%', margin: '10px'}}>
-
-
                                 <Form.Input required fluid label="Institution Name:"
                                             style={{width: '100%'}}
                                             value={this.state.institutionname}
                                             onChange={this.handleAddInstitutionName}
                                             error={!!this.state.errorMessage2}
                                 />
-
                                 <Form.Input required fluid label="Institution Address:"
                                             style={{width: '96.555%'}}
                                             value={this.state.institutionaddress}
@@ -205,7 +187,6 @@ class Admin extends Component {
                                             error={!!this.state.errorMessage2}
                                 />
                             </Form.Field>
-
                         </Form.Group>
                         <Form.Field style={{textAlign: 'center', margin: '10%'}}>
                             <Button style={{width: '30%', height: '50px'}} onClick={this.onSubmit2} color={"blue"}
@@ -215,10 +196,8 @@ class Admin extends Component {
                         </Form.Field>
                     </Form>
                 </Card>
-
-                <!-- //if an operation started the state will change to true and the snackbar will appear -->
+                {/*if an operation started the state will change to true and the snackbar will appear */}
                 <div>{this.state.loading === true ? <SimpleSnackbar/> : null}</div>
-
                 <FixedMenuLayout/>
             </div>
         );

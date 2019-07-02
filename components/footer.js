@@ -14,7 +14,7 @@ import web3 from "./web3.js"
 
 class FixedMenuLayout extends Component {
 
-    componentDidMount(){
+    componentDidMount() {
         this.loadBlockchainData()
     }
 
@@ -26,8 +26,9 @@ class FixedMenuLayout extends Component {
         this.setState({isCompany: await instance.methods.isCompany(accounts[0]).call()});
         this.setState({isInstitution: await instance.methods.isInstitution(accounts[0]).call()});
     }
-            constructor(props) {
-                super(props);
+
+    constructor(props) {
+        super(props);
         this.state = {
             isOwner: false,
             isUser: false,
@@ -49,7 +50,7 @@ class FixedMenuLayout extends Component {
                                 <h2 style={{margin: '5px'}}>Resume Verifier</h2>
                             </Menu.Item>
                         </Link>
-                        <!-- if the loaded address is a registered user the dropdown menu will appear -->
+                        {/* if the loaded address is a registered user the dropdown menu will appear */}
                         {this.state.isUser === true ?
                             <Dropdown item simple text='Profile'>
                                 <Dropdown.Menu>
@@ -69,43 +70,37 @@ class FixedMenuLayout extends Component {
                                 <Menu.Item as='a' header>
                                     Register
                                 </Menu.Item>
-
                             </Link>
                         }
-                        <!-- if the loaded address is the owner of the contract, the Admin page will be revealed -->
+                        {/*if the loaded address is the owner of the contract, the Admin page will be revealed */}
                         {this.state.isOwner === false ? null :
                             <Link href="/Admin">
-                            <Menu.Item as='a' header>
-                            Admin
-                            </Menu.Item>
+                                <Menu.Item as='a' header>
+                                    Admin
+                                </Menu.Item>
                             </Link>
                         }
-                        <!-- if the loaded address is a company, the  Company Requests button will appear -->
-                        {this.state.isCompany  === true ? <Link href="/RequestsCompany">
-                        <Menu.Item as='a' header>
-                            Company Requests
-                            </Menu.Item>
-                            </Link>
-                            : null}
-
-                      <!-- if the loaded address is an institution, the   Institution Requests button will appear -->
-                        {this.state.isInstitution  === true ? <Link href="/RequestsInstitution">
+                        {/*if the loaded address is a company, the  Company Requests button will appear  */}
+                        {this.state.isCompany === true ? <Link href="/RequestsCompany">
                                 <Menu.Item as='a' header>
-                                   Institution Requests
+                                    Company Requests
                                 </Menu.Item>
                             </Link>
                             : null}
-
+                        {/* if the loaded address is an institution, the   Institution Requests button will appear */}
+                        {this.state.isInstitution === true ? <Link href="/RequestsInstitution">
+                                <Menu.Item as='a' header>
+                                    Institution Requests
+                                </Menu.Item>
+                            </Link>
+                            : null}
                     </Container>
                 </Menu>
                 <Card vertical style={{margin: '60em 0em 0em', padding: '5em 0em', width: '100%'}}>
                     <Container textAlign='center'>
-
-
                         <Image centered size='normal'
                                src='https://modex.tech/wp-content/uploads/2018/11/logo-top3.png'/>
                         <Divider/>
-
                         <p>© 2019 Modex. | MODEX (Gibraltar) LIMITED, 57/63 Line Wall Road, Gibraltar </p>
                     </Container>
                 </Card>
@@ -113,5 +108,6 @@ class FixedMenuLayout extends Component {
         );
     }
 }
+
 export default FixedMenuLayout
 

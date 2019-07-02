@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Head from "next/head";
-import {Button, Card, Container, Form, Message, Segment, Table, Icon} from "semantic-ui-react";
+import { Card, Segment, Table} from "semantic-ui-react";
 import FixedMenuLayout from "../components/footer";
 import instance from "../components/verifier.js";
 import web3 from '../components/web3.js';
@@ -40,7 +40,6 @@ class ShowInfo extends Component {
                 this.setState({jobs: [...this.state.jobs, z]});
             }
         }
-
         const z = await instance.methods.getCertificateCount(this.state.accounts[0]).call();
         for (let i = 0; i < z; i++) {
             const r = await instance.methods.getCertificate(this.state.accounts[0], i).call();
@@ -72,7 +71,6 @@ class ShowInfo extends Component {
 
     //renders the table of certificates
     renderCertificateTable() {
-
         let tableStyle = {
             width: '38%',
             margin: '30px auto'
@@ -80,7 +78,6 @@ class ShowInfo extends Component {
 
         if (this.state.certificates && this.state.certificates.length) {
             return (<Table celled style={tableStyle} color={'blue'} key={'blue'} inverted>
-
                     <Table.Header>
                         <Segment inverted color="blue" style={{textalign: 'center'}}><h2>Certificates</h2></Segment>
                         <Table.Row>
@@ -100,7 +97,6 @@ class ShowInfo extends Component {
 
     //renders the jobs of an user in table rows
     renderJobs() {
-
         const x = this.state.accounts[0];
         let y = 'Unknown';
         let r = this.state.jobs.map(function (job) {
@@ -151,20 +147,9 @@ class ShowInfo extends Component {
     }
 
     render() {
-        console.log('test', this.state.loading);
         let cardStyle = {
             width: '15%',
             margin: '100px auto',
-        };
-
-        let labelStyle = {
-            margin: '10px',
-            textAlign: 'center'
-        };
-
-        let formstyle = {
-            opacity: '100%'
-
         };
 
         return (
@@ -198,7 +183,6 @@ class ShowInfo extends Component {
                 {this.state.info === null ? null :
                     <Card color="blue" style={cardStyle}>
                         <Card.Content>
-
                             <div style={{margin: '2%'}}><h3 style={{margin: '1%'}}>Name:</h3> <h5
                                 style={{margin: '1%'}}> {this.state.info[0].toString()}</h5></div>
                             <div style={{margin: '2%'}}><h3 style={{margin: '1%'}}>Date of birth:</h3> <h5
@@ -209,7 +193,6 @@ class ShowInfo extends Component {
                             <div style={{margin: '2%'}}><h3 style={{margin: '1%'}}>E-mail:</h3> <h5
                                 style={{margin: '1%'}}> {this.state.info[5].toString()}</h5></div>
                         </Card.Content>
-
                     </Card>}
                 {this.renderJobsTable()}
                 {this.renderCertificateTable()}

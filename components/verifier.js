@@ -620,6 +620,5 @@ const address ='0x63f71330763dbed1aeea7f42e501e5d754bc1fdf';
 
 const instance = new web3.eth.Contract(abi, address);
 
-
 export default instance;
 

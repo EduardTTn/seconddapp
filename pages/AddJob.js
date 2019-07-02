@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Head from "next/head";
-import {Button, Card, Container, Form, Message} from "semantic-ui-react";
+import {Button, Card, Form, Message} from "semantic-ui-react";
 import FixedMenuLayout from "../components/footer";
 import instance from "../components/verifier.js";
 import web3 from '../components/web3.js';
@@ -37,7 +37,6 @@ class AddJob extends Component {
         this.setState({errorMessage: ''});
     };
 
-
     handleAddPosition = event => {
         event.preventDefault();
         this.setState({position: event.target.value});
@@ -49,7 +48,6 @@ class AddJob extends Component {
         this.setState({yearhired: event.target.value});
         this.setState({errorMessage: ''});
     };
-
 
     handleAddLeft = event => {
         event.preventDefault();
@@ -71,7 +69,6 @@ class AddJob extends Component {
             this.setState({errorMessage: "Invalid SSN"});
         } else if (this.state.yearhired > this.state.yearleft) {
             this.setState({errorMessage: "Invalid Period"});
-
         } else if (this.state.errorMessage === '') {
             event.preventDefault();
             this.setState({loading: true});
@@ -84,8 +81,6 @@ class AddJob extends Component {
 
     render() {
         {
-            console.log('loading', this.state.loading);
-
             let cardStyle = {
                 width: '23%',
                 margin: '100px auto',
@@ -102,7 +97,6 @@ class AddJob extends Component {
 
             return (
                 <div>
-
                     <div>
                     </div>
                     <Head>
@@ -115,11 +109,9 @@ class AddJob extends Component {
         a {
           font-family: 'Arial';
         }
-        
         Card {
            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
            }
-           
         body {
          background: url("https://images.unsplash.com/photo-1511649475669-e288648b2339?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2089&q=80");
          background-repeat: no-repeat;
@@ -128,34 +120,27 @@ class AddJob extends Component {
         }
       `}</style>
                     </Head>
-
                     <Card style={cardStyle}><h4 style={{margin: '4%'}}>Add a job to your resume, once submited, the
                         company will validate it or deny it.</h4></Card>
-
                     <Card color="blue" style={cardStyle}>
-
                         <label style={labelStyle}><h2>Add Job </h2></label>
                         <Form className={"form-inline"} onSubmit={this.onSubmit}
                               error={!!this.state.errorMessage} style={formstyle}>
                             <Message error header={"Notice:"} content={this.state.errorMessage}/>
                             <Form.Group inline style={{width: '60%', margin: '30px auto'}}>
-
                                 <Form.Field required style={{width: '90%', margin: '10px'}}>
-
                                     <Form.Input required fluid label="Position:"
                                                 style={{width: '100%'}}
                                                 value={this.state.position}
                                                 onChange={this.handleAddPosition}
                                                 error={!!this.state.errorMessage}
                                     />
-
                                     <Form.Input required fluid label="Company:"
                                                 style={{width: '96.555%'}}
                                                 value={this.state.companyname}
                                                 onChange={this.handleAddCompanyName}
                                                 error={!!this.state.errorMessage}
                                     />
-
                                     <Form.Input required fluid label="SSN:"
                                                 style={{width: '80%'}}
                                                 value={parseInt(this.state.SSN)}
@@ -163,7 +148,6 @@ class AddJob extends Component {
                                                 type="number"
                                                 min={100000000} max={999999999} step={1}
                                     />
-
                                     <Form.Input required fluid label="Months worked:"
                                                 style={{width: '100px'}}
                                                 value={parseInt(this.state.monthsworked)}
@@ -171,7 +155,6 @@ class AddJob extends Component {
                                                 type="number"
                                                 min={1} step={1}
                                     />
-
                                     <Form.Input required fluid label="Year hired:"
                                                 style={{width: '100px'}}
                                                 value={parseInt(this.state.yearhired)}
@@ -180,7 +163,6 @@ class AddJob extends Component {
                                                 min={1970} max={2099}
                                                 error={!!this.state.errorMessage}
                                     />
-
                                     <Form.Input required fluid label="Year left:"
                                                 style={{width: '100px'}}
                                                 value={parseInt(this.state.yearleft)}
@@ -190,7 +172,6 @@ class AddJob extends Component {
                                                 error={!!this.state.errorMessage}
                                     />
                                 </Form.Field>
-
                             </Form.Group>
                             <Form.Field style={{textAlign: 'center', margin: '10%'}}>
                                 <Button style={{width: '30%', height: '50px'}} onClick={this.onSubmit} color={"blue"}
@@ -198,13 +179,10 @@ class AddJob extends Component {
                                     Submit
                                 </Button>
                             </Form.Field>
-
                         </Form>
-
                     </Card>
-                    <!-- //if an operation started the state will change to true and the snackbar will appear -->
+                    {/*if an operation started the state will change to true and the snackbar will appear */}
                     <div>{this.state.loading === true ? <SimpleSnackbar/> : null}</div>
-
                     <FixedMenuLayout/>
                 </div>
             );

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Head from "next/head";
-import {Button, Card, Container, Form, Icon, Message, Segment, Table} from "semantic-ui-react";
+import {Button, Card, Icon, Segment, Table} from "semantic-ui-react";
 import FixedMenuLayout from "../components/footer";
 import instance from "../components/verifier.js";
 import web3 from '../components/web3.js';
@@ -28,14 +28,12 @@ class RequestsCompany extends Component {
         this.setState({accounts: await web3.eth.getAccounts()});
         this.setState({accounts: await web3.eth.getAccounts()});
         const x = await instance.methods.getJobRequestCount(this.state.accounts[0]).call();
-
         try {
             for (let i = 0; i < x; i++) {
                 let z = await instance.methods.getJobRequest(this.state.accounts[0], i).call();
                 if (z[5] === false) {
                     this.setState({jobz: [...this.state.jobz, z]});
                 }
-
             }
         } catch (err) {
             this.setState({errorMessage: err.message});
@@ -44,7 +42,6 @@ class RequestsCompany extends Component {
 
 //renders the jobs requests of a company in table rows
     renderJobRequests() {
-
         let y = this.state.loading
         const x = this.state.accounts[0];
         let r = this.state.jobz.map(function (job, index) {
@@ -57,7 +54,6 @@ class RequestsCompany extends Component {
                     e.preventDefault();
                     //calls the approveRequestJob function of the contract
                     instance.methods.approveRequestJob(index).send({from: x}).once('receipt', (receipt) => {
-
                     });
                 }}><Icon color='black' name='check'/></Button>
                 < Button onClick={(e) => {
@@ -74,7 +70,6 @@ class RequestsCompany extends Component {
 
     //renders the jobs requests in a table
     renderJobRequestsTables() {
-
         let tableStyle = {
             width: '45%',
             margin: '30px auto'
@@ -87,7 +82,6 @@ class RequestsCompany extends Component {
 
         if (this.state.jobz && this.state.jobz.length) {
             return (<Table celled style={tableStyle} color={'blue'} key={'blue'} inverted>
-
                     <Table.Header>
                         <Segment inverted color="blue" style={{textalign: 'center'}}><h2>Requests</h2></Segment>
                         <Table.Row>
@@ -100,8 +94,6 @@ class RequestsCompany extends Component {
                     </Table.Header>
                     <Table.Body>
                         {this.renderJobRequests()}
-
-
                     </Table.Body>
                 </Table>
             );
@@ -110,12 +102,9 @@ class RequestsCompany extends Component {
     }
 
     render() {
-        console.log('address:', this.state.accounts[0]);
-        console.log('company:', this.state.loading);
         return (
             <div>
                 <div></div>
-
                 <Head>
                     <link
                         rel="stylesheet"
@@ -130,9 +119,8 @@ class RequestsCompany extends Component {
         }
       `}</style>
                 </Head>
-
                 <div style={{margin: '150px auto'}}>{this.renderJobRequestsTables()}</div>
-                <!-- //if an operation started the state will change to true and the snackbar will appear -->
+                {/*if an operation started the state will change to true and the snackbar will appear */}
                 <div>{this.state.loading === true ? <SimpleSnackbar/> : null}</div>
                 <FixedMenuLayout/>
             </div>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Head from "next/head";
-import {Button, Card, Container, Form, Icon, Message, Segment, Table} from "semantic-ui-react";
+import {Button, Card, Icon, Segment, Table} from "semantic-ui-react";
 import FixedMenuLayout from "../components/footer";
 import instance from "../components/verifier.js";
 import web3 from '../components/web3.js';
@@ -40,10 +40,8 @@ class RequestsInstitution extends Component {
 
     //renders the certificates requests of an institution in table rows
     renderCertRequests() {
-
         const x = this.state.accounts[0];
         let r = this.state.institutionz.map(function (cert, index) {
-
             return [<Table.Row>
                 <Table.Cell key={x}>{cert[2].toString()}</Table.Cell>
                 <Table.Cell key={x}>{cert[0].toString()}</Table.Cell>
@@ -70,7 +68,6 @@ class RequestsInstitution extends Component {
 
     //renders the certificates requests in a table
     renderCertRequestsTables() {
-
         let tableStyle = {
             width: '45%',
             margin: '30px auto'
@@ -83,7 +80,6 @@ class RequestsInstitution extends Component {
 
         if (this.state.institutionz && this.state.institutionz.length) {
             return (<Table celled style={tableStyle} color={'blue'} key={'blue'} inverted>
-
                     <Table.Header>
                         <Segment inverted color="blue" style={{textalign: 'center'}}><h2>Requests</h2></Segment>
                         <Table.Row>
@@ -109,7 +105,6 @@ class RequestsInstitution extends Component {
         return (
             <div>
                 <div></div>
-
                 <Head>
                     <link
                         rel="stylesheet"
@@ -122,16 +117,14 @@ class RequestsInstitution extends Component {
          background-position: center; 
          background-attachment: fixed;
         }
-         
         Card {
            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
      
            }
           `}</style>
                 </Head>
-
                 <div style={{margin: '150px auto'}}>{this.renderCertRequestsTables()}</div>
-                <!-- //if an operation started the state will change to true and the snackbar will appear -->
+                {/*if an operation started the state will change to true and the snackbar will appear */}
                 <div>{this.state.loading === true ? <SimpleSnackbar/> : null}</div>
                 <FixedMenuLayout/>
             </div>

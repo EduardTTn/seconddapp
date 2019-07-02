@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Card, Container, Segment, Table, Form, Button, Icon, Message} from 'semantic-ui-react'
-
 import Head from "next/head";
 import FixedMenuLayout from "../components/footer";
 import web3 from "../components/web3";
@@ -8,7 +7,6 @@ import instance from "../components/verifier";
 import SimpleSnackbar from '../components/snackbar.js'
 
 class Index extends Component {
-
 
     constructor(props) {
         super(props);
@@ -81,7 +79,6 @@ class Index extends Component {
             errorMessage: ''});
 
     };
-
     //once called, the function calls the following functions of the contract (getBasicInfo, getBasicInfo, getJob, getCertificateCount, getCertificate) and displays the info on screen for email based search
     onSecondSubmit = async event => {
 
@@ -99,7 +96,6 @@ class Index extends Component {
                     const z = await instance.methods.getJob(j, i).call();
                     this.setState({jobs: [...this.state.jobs, z]});
                 }
-
                 const z = await instance.methods.getCertificateCount(j).call();
                 for (let i = 0; i < z; i++) {
                     const r = await instance.methods.getCertificate(j, i).call();
@@ -111,13 +107,10 @@ class Index extends Component {
                 if(this.state.info[0] === '')
                     this.setState({errorMessage: 'E-mail not registered'});
             }
-
-
         };
 
     //once called, the function calls the following functions of the contract (getBasicInfo, getBasicInfo, getJob, getCertificateCount, getCertificate) and displays the info on screen for address based search
     onSubmit = async event => {
-
         try {
             event.preventDefault();
             this.setState({accounts: await web3.eth.getAccounts()});
@@ -131,7 +124,6 @@ class Index extends Component {
                 const z = await instance.methods.getJob(this.state.address, i).call();
                 this.setState({jobs: [...this.state.jobs, z]});
             }
-
             const z = await instance.methods.getCertificateCount(this.state.address).call();
             for (let i = 0; i < z; i++) {
                 const r = await instance.methods.getCertificate(this.state.address, i).call();
@@ -149,8 +141,6 @@ class Index extends Component {
 
     //renders the certificates of an user in table rows
     renderCertificates() {
-
-
         const x = 'Certificates'+this.state.address;
         let y = 'Unknown';
         let r = this.state.certificates.map(function (certificate) {
@@ -176,7 +166,6 @@ class Index extends Component {
     //renders the table of certificates
     renderCertificateTable()
     {
-
         let tableStyle = {
             width: '38%',
             margin: '30px auto'
@@ -185,7 +174,6 @@ class Index extends Component {
         console.log('certificate before:',this.state.certificates);
         if (this.state.certificates && this.state.certificates.length) {
             return (<Table celled style={tableStyle} color={'blue'} key={'blue'}  inverted  >
-
                     <Table.Header>
                         <Segment inverted color="blue" style={{textalign: 'center'}}> <h2>Certificates</h2> </Segment>
                         <Table.Row>
@@ -202,7 +190,6 @@ class Index extends Component {
             );
         } else return null;
     }
-
     //renders the jobs of an user in table rows
     renderJobs() {
         const x = this.state.address;
@@ -226,7 +213,6 @@ class Index extends Component {
         });
         return r;
     }
-
     //renders the table of jobs
     renderJobsTable()
     {
@@ -255,10 +241,7 @@ class Index extends Component {
             );
         } else return null;
     }
-
     render() {
-        console.log('certificate after:',this.state.certificates);
-        console.log('jobs after:',this.state.jobs);
         let cardStyle = {
             display: 'block',
             width: '28%',
@@ -270,10 +253,8 @@ class Index extends Component {
             width: '100%',
         };
         return (
-
             <div>
                 <div>
-
                 </div>
                 <Head>
                     <link
@@ -291,12 +272,8 @@ class Index extends Component {
                 </Head>
                 <Container>ed</Container>
                 <div style={{margin: '6%'}}>  <Button primary disabled={!this.state.addressform} onClick={this.onEmailClick}>Search by E-mail</Button><Button primary disabled={this.state.addressform} onClick={this.onAddressClick}>Search by Address</Button></div>
-
-
-
                 <Form className={"form-inline"} style={formStyle} onSubmit={this.onSubmit}
                       error={!!this.state.errorMessage}>
-
                     {this.state.addressform === true ?
                     <Form.Group inline style={{width: '60%', margin: '150px auto'}}>
                         <label style={{fontSize: 'x-large'}}>Search by Address:</label>
@@ -318,7 +295,6 @@ class Index extends Component {
                         </Form.Field>
                     </Form.Group>
                         : null}
-
                     {this.state.addressform === false ?
                         <Form.Group inline style={{width: '60%', margin: '150px auto'}}>
                             <label style={{fontSize: 'x-large'}}>Search by E-mail:</label>
@@ -344,11 +320,9 @@ class Index extends Component {
                         : null}
                     <Message style={{width: '15%', margin: '30px auto'}} error header={"Notice:"} content={this.state.errorMessage}/>
                 </Form>
-
                     {this.state.info === null ? null :
                         <Card color="blue" style={cardStyle}>
                             <Card.Content>
-
                                 <div style={{margin: '2%'}}><h3 style={{margin: '1%'}}>Name:</h3> <h5
                                     style={{margin: '1%'}}> {this.state.info[0].toString()}</h5></div>
                                 <div style={{margin: '2%'}}><h3 style={{margin: '1%'}}>Date of birth:</h3> <h5
@@ -359,18 +333,14 @@ class Index extends Component {
                                 <div style={{margin: '2%'}}><h3 style={{margin: '1%'}}>E-mail:</h3> <h5
                                     style={{margin: '1%'}}> {this.state.info[5].toString()}</h5></div>
                             </Card.Content>
-
                         </Card>}
                     <div style={{margin: '4%'}}>
                         <div>{this.renderJobsTable()}</div>
-                        <div>  {this.renderCertificateTable()}</div>
-
+                        <div>{this.renderCertificateTable()}</div>
                     </div>
-                <!-- //if an operation started the state will change to true and the snackbar will appear -->
+                {/*if an operation started the state will change to true and the snackbar will appear */}
                 <div>{this.state.loading === true ? <SimpleSnackbar/> : null}</div>
-
                 <FixedMenuLayout/>
-
             </div>
         );
     }
