@@ -337,6 +337,10 @@ const abi = [
         "constant": true,
         "inputs": [
             {
+                "name": "_addr",
+                "type": "address"
+            },
+            {
                 "name": "_index",
                 "type": "uint256"
             }
@@ -374,7 +378,12 @@ const abi = [
     },
     {
         "constant": true,
-        "inputs": [],
+        "inputs": [
+            {
+                "name": "_addr",
+                "type": "address"
+            }
+        ],
         "name": "getCertRequestCount",
         "outputs": [
             {
@@ -566,7 +575,7 @@ const abi = [
 ];
 
 //constant that stores the address of the contract
-const address ='0xa598e2c63f5dd5e6c16d3a0eb6fbd25dbb4123b8';
+const address ='0x073a2397f6255b27a6b4c2baea05613fcb82ffc3';
 
 const instance = new web3.eth.Contract(abi, address);
 

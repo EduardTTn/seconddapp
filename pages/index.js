@@ -99,11 +99,9 @@ class Index extends Component {
             if (x === null) {
                 this.setState({errorMessage: 'E-mail not registered'});
             } else {
-                this.setState({
-                    info: x
-                });
+                this.setState({info: x});
             }
-            const y = await instance.methods.getBasicInfo(j).call();
+            const y = await instance.methods.getJobCount(j).call();
             for (let i = 0; i < y; i++) {
                 const z = await instance.methods.getJob(j, i).call();
                 this.setState({jobs: [...this.state.jobs, z]});
@@ -117,9 +115,6 @@ class Index extends Component {
             if (err.message.includes('User denied')) {
                 this.setState({errorMessage: "Transaction Canceled"});
             }
-            if (this.state.email === '')
-                this.setState({errorMessage: 'Field is Empty'});
-
         }
     };
 
@@ -185,7 +180,6 @@ class Index extends Component {
             margin: '30px auto'
         };
 
-        console.log('certificate before:', this.state.certificates);
         if (this.state.certificates && this.state.certificates.length) {
             return (<Table celled style={tableStyle} color={'blue'} key={'blue'} inverted>
                     <Table.Header>
@@ -202,7 +196,7 @@ class Index extends Component {
                     </Table.Body>
                 </Table>
             );
-        } else return null;
+        } else return '';
     }
 
     //renders the jobs of an user in table rows
@@ -233,7 +227,6 @@ class Index extends Component {
             width: '38%',
             margin: '30px auto'
         };
-        console.log('jobs before:', this.state.jobs);
 
         if (this.state.jobs.length !== 0) {
             return (<Table celled style={tableStyle} color={'blue'} key={'blue'} inverted>
@@ -252,7 +245,7 @@ class Index extends Component {
                     </Table.Body>
                 </Table>
             );
-        } else return null;
+        } else return '';
     }
 
     render() {
@@ -262,7 +255,6 @@ class Index extends Component {
             margin: '7px auto',
             height: 'auto',
         };
-
         let formStyle = {
             width: '100%',
         };
@@ -330,7 +322,6 @@ class Index extends Component {
                                         color={"blue"}
                                         style={{width: '150px', height: '75px'}}
                                 >
-
                                     <Icon color='white' name='search'/>
                                 </Button>
                             </Form.Field>

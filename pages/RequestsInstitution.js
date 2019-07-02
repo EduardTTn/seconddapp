@@ -24,7 +24,6 @@ class RequestsInstitution extends Component {
     //loads the data from the blockchain before the page is fired and executes the following functions from the contract: getJobRequestCount, getJobRequest
     async loadBlockchainData() {
         this.setState({accounts: await web3.eth.getAccounts()});
-        this.setState({accounts: await web3.eth.getAccounts()});
         const x = await instance.methods.getCertRequestCount(this.state.accounts[0]).call();
         try {
             for (let i = 0; i < x; i++) {
@@ -47,22 +46,18 @@ class RequestsInstitution extends Component {
                 <Table.Cell key={x}>{cert[0].toString()}</Table.Cell>
                 <Table.Cell key={x}>{cert[1].toString()}</Table.Cell>
                 <Table.Cell key={x}>{cert[3].toString()}</Table.Cell>
-                <Button disabled={this.state.loading} onClick={(e) => {
+                <Button  onClick={(e) => {
                     //calls the approveRequestCertificate function of the contract
                     e.preventDefault();
                     instance.methods.approveRequestCertificate(index).send({from: x});
-                    this.setState({loading: true});
                 }}><Icon color='black' name='check'/></Button>
-                < Button disabled={load} onClick={(e) => {
+                < Button  onClick={(e) => {
                     //calls the denyRequestCertificate function of the contract
                     e.preventDefault();
                     instance.methods.denyRequestCertificate(index).send({from: x});
-                    this.setState({loading: true});
                 }}><Icon color='black' name='close'/></Button>
-
             </Table.Row>];
         });
-
         return r;
     }
 
@@ -72,12 +67,10 @@ class RequestsInstitution extends Component {
             width: '45%',
             margin: '30px auto'
         };
-
         let cardStyle = {
             width: '35%',
             margin: '100px auto',
         };
-
         if (this.state.institutionz && this.state.institutionz.length) {
             return (<Table celled style={tableStyle} color={'blue'} key={'blue'} inverted>
                     <Table.Header>
@@ -100,8 +93,7 @@ class RequestsInstitution extends Component {
     }
 
     render() {
-        console.log('address:', this.state.accounts[0]);
-        console.log('company:', this.state.loading);
+
         return (
             <div>
                 <div></div>

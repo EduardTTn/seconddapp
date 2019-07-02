@@ -26,7 +26,6 @@ class RequestsCompany extends Component {
     //loads the data from the blockchain before the page is fired and executes the following functions from the contract: getJobRequestCount, getJobRequest
     async loadBlockchainData() {
         this.setState({accounts: await web3.eth.getAccounts()});
-        this.setState({accounts: await web3.eth.getAccounts()});
         const x = await instance.methods.getJobRequestCount(this.state.accounts[0]).call();
         try {
             for (let i = 0; i < x; i++) {
@@ -42,7 +41,6 @@ class RequestsCompany extends Component {
 
 //renders the jobs requests of a company in table rows
     renderJobRequests() {
-        let y = this.state.loading
         const x = this.state.accounts[0];
         let r = this.state.jobz.map(function (job, index) {
             return [<Table.Row>
@@ -74,7 +72,6 @@ class RequestsCompany extends Component {
             width: '45%',
             margin: '30px auto'
         };
-
         let cardStyle = {
             width: '35%',
             margin: '100px auto',

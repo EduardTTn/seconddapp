@@ -19,10 +19,8 @@ class Admin extends Component {
             errorMessage1: '',
             errorMessage2: '',
             accounts: []
-
         };
-    }
-    ;
+    };
 
     //handle methods are changing the states and prevent the default behaviour
     handleAddCompanyName = event => {
@@ -65,7 +63,6 @@ class Admin extends Component {
             await instance.methods.addCompany(this.state.companyaddress, this.state.companyname).send({
                 from: this.state.accounts[0]
             })
-
         } catch (err) {
             if (err.message.includes('User denied')) {
                 this.setState({errorMessage: "Transaction Canceled"});
@@ -108,12 +105,10 @@ class Admin extends Component {
             width: '23%',
             margin: '100px auto'
         };
-
         let labelStyle = {
             margin: '10px',
             textAlign: 'center'
         };
-
         let formstyle = {
             opacity: '100%'
         };

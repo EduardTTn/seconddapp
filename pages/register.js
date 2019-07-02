@@ -93,12 +93,10 @@ class Register extends Component {
             width: '23%',
             margin: '100px auto',
         };
-
         let labelStyle = {
             margin: '10px',
             textAlign: 'center'
         };
-
         let formstyle = {
             opacity: '100%'
         };

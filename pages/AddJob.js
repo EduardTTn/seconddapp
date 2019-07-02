@@ -82,19 +82,22 @@ class AddJob extends Component {
                 this.setState({errorMessage: "Fields can't be empty"});
             } else if (this.state.SSN < 100000000 || this.state.day > 999999999) {
                 this.setState({errorMessage: "Invalid SSN"});
+            } else if (this.state.monthhired > this.state.monthleft && this.state.yearhired === this.state.yearleft) {
+                this.setState({errorMessage: "Invalid Period"});
             } else if (this.state.errorMessage === '') {
                 this.setState({loading: true});
                 this.setState({accounts: await web3.eth.getAccounts()});
                 await instance.methods.addJob(this.state.monthhired, this.state.monthleft, this.state.yearhired, this.state.yearleft, this.state.position, this.state.companyname, this.state.SSN).send({
                     from: this.state.accounts[0]
                 });
-            } else if (this.state.monthhired > this.state.monthleft || this.state.yearhired > this.state.yearleft) {
-                this.setState({errorMessage: "Invalid Period"});
             }
-
         } catch (err) {
+
             if (err.message.includes('User denied')) {
                 this.setState({errorMessage: "Transaction Canceled"});
+            }
+            if (this.state.yearhired > this.state.yearleft) {
+                this.setState({errorMessage: "Invalid Period"});
             }
         }
     };
@@ -167,6 +170,7 @@ class AddJob extends Component {
                                                 onChange={this.handleAddSSN}
                                                 type="number"
                                                 min={100000000} max={999999999} step={1}
+                                                error={!!this.state.errorMessage}
                                     />
                                     <label style={{margin: '4%'}}><h5>Period Worked:</h5></label>
                                     <Form.Group>
@@ -176,7 +180,8 @@ class AddJob extends Component {
                                                     value={parseInt(this.state.monthhired)}
                                                     onChange={this.handleAddMonthH}
                                                     type="number"
-                                                    min={1} step={31}
+                                                    min={1} max={31} step={1}
+                                                    error={!!this.state.errorMessage}
                                         />
 
                                         <Form.Input required fluid label="year:"
@@ -184,7 +189,8 @@ class AddJob extends Component {
                                                     value={parseInt(this.state.yearhired)}
                                                     onChange={this.handleAddYearH}
                                                     type="number"
-                                                    min={1978} step={2028}
+                                                    min={1978} max={2028} step={1}
+                                                    error={!!this.state.errorMessage}
                                         />
                                     </Form.Group>
                                     <Form.Group>
@@ -194,7 +200,7 @@ class AddJob extends Component {
                                                     value={parseInt(this.state.monthleft)}
                                                     onChange={this.handleAddMonthL}
                                                     type="number"
-                                                    min={1} step={31}
+                                                    min={1} max={31} step={1}
                                         />
 
                                         <Form.Input required fluid label="year:"
@@ -202,7 +208,7 @@ class AddJob extends Component {
                                                     value={parseInt(this.state.yearleft)}
                                                     onChange={this.handleAddYearL}
                                                     type="number"
-                                                    min={1978} step={2028}
+                                                    min={1978} max={2029} step={1}
                                         />
                                     </Form.Group>
                                 </Form.Field>

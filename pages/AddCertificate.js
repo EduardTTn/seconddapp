@@ -18,8 +18,6 @@ class AddCertificate extends Component {
             degree: '',
             year: 0,
             ID: '',
-
-
         };
     }
     ;
@@ -64,15 +62,13 @@ class AddCertificate extends Component {
                 await instance.methods.addCertificate(this.state.year, this.state.institutionname, this.state.degree, this.state.ID).send({
                     from: this.state.accounts[0]
                 });
-
             }
         } catch (err) {
             if (err.message.includes('User denied')) {
                 this.setState({errorMessage: "Transaction Canceled"});
             }
         }
-    }
-
+    };
 
     render() {
         {
@@ -80,7 +76,6 @@ class AddCertificate extends Component {
                 width: '23%',
                 margin: '100px auto',
             };
-
             let labelStyle = {
                 margin: '10px',
                 textAlign: 'center'
@@ -114,9 +109,7 @@ class AddCertificate extends Component {
         }
       `}</style>
                     </Head>
-                    <Card style={cardStyle}><h4 style={{margin: '4%'}}>Add a certificate to your resume, once submited,
-                        the
-                        company will validate it or deny it.</h4></Card>
+                    <Card style={cardStyle}><h4 style={{margin: '4%'}}>Add a certificate to your resume, once submited, the company will validate it or deny it.</h4></Card>
                     <Card color="blue" style={cardStyle}>
                         <label style={labelStyle}><h2>Add Certificate </h2></label>
                         <Form className={"form-inline"} onSubmit={this.onSubmit}
