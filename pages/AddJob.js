@@ -85,16 +85,18 @@ class AddJob extends Component {
             } else if (this.state.errorMessage === '') {
                 this.setState({loading: true});
                 this.setState({accounts: await web3.eth.getAccounts()});
-                await instance.methods.addJob(this.state.monthsworked, this.state.position, this.state.companyname, this.state.SSN).send({
+                await instance.methods.addJob(this.state.monthhired, this.state.monthleft, this.state.yearhired, this.state.yearleft, this.state.position, this.state.companyname, this.state.SSN).send({
                     from: this.state.accounts[0]
                 });
+            } else if (this.state.monthhired > this.state.monthleft || this.state.yearhired > this.state.yearleft) {
+                this.setState({errorMessage: "Invalid Period"});
             }
-        }
 
-        catch(err){
+        } catch (err) {
             if (err.message.includes('User denied')) {
                 this.setState({errorMessage: "Transaction Canceled"});
-            }        }
+            }
+        }
     };
 
     render() {
@@ -146,7 +148,7 @@ class AddJob extends Component {
                               error={!!this.state.errorMessage} style={formstyle}>
                             <Message error header={"Notice:"} content={this.state.errorMessage}/>
                             <Form.Group inline style={{width: '60%', margin: '30px auto'}}>
-                                <Form.Field  style={{width: '90%', margin: '10px'}}>
+                                <Form.Field style={{width: '90%', margin: '10px'}}>
                                     <Form.Input required fluid label="Position:"
                                                 style={{width: '100%'}}
                                                 value={this.state.position}
@@ -166,43 +168,43 @@ class AddJob extends Component {
                                                 type="number"
                                                 min={100000000} max={999999999} step={1}
                                     />
-                                    <label style={{margin:'4%'}}><h5>Period Worked:</h5></label>
-<Form.Group>
-                                    <label style={{margin:'4%'}}>Date hired:</label>
-                                    <Form.Input required fluid label="month:"
-                                                style={{width: '100px'}}
-                                                value={parseInt(this.state.monthhired)}
-                                                onChange={this.handleAddMonthH}
-                                                type="number"
-                                                min={1} step={1}
-                                    />
+                                    <label style={{margin: '4%'}}><h5>Period Worked:</h5></label>
+                                    <Form.Group>
+                                        <label style={{margin: '4%'}}>Date hired:</label>
+                                        <Form.Input required fluid label="month:"
+                                                    style={{width: '100px'}}
+                                                    value={parseInt(this.state.monthhired)}
+                                                    onChange={this.handleAddMonthH}
+                                                    type="number"
+                                                    min={1} step={31}
+                                        />
 
-                                    <Form.Input required fluid label="year:"
-                                                style={{width: '100px'}}
-                                                value={parseInt(this.state.yearhired)}
-                                                onChange={this.handleAddYearH}
-                                                type="number"
-                                                min={1} step={1}
-                                    />
-</Form.Group>
-                                <Form.Group>
-                                    <label style={{margin:'4%'}} >Date Left:</label>
-                                    <Form.Input required fluid label="month:"
-                                                style={{width: '100px'}}
-                                                value={parseInt(this.state.monthleft)}
-                                                onChange={this.handleAddMonthL}
-                                                type="number"
-                                                min={1} step={1}
-                                    />
+                                        <Form.Input required fluid label="year:"
+                                                    style={{width: '100px'}}
+                                                    value={parseInt(this.state.yearhired)}
+                                                    onChange={this.handleAddYearH}
+                                                    type="number"
+                                                    min={1978} step={2028}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group>
+                                        <label style={{margin: '4%'}}>Date Left:</label>
+                                        <Form.Input required fluid label="month:"
+                                                    style={{width: '100px'}}
+                                                    value={parseInt(this.state.monthleft)}
+                                                    onChange={this.handleAddMonthL}
+                                                    type="number"
+                                                    min={1} step={31}
+                                        />
 
-                                    <Form.Input required fluid label="year:"
-                                                style={{width: '100px'}}
-                                                value={parseInt(this.state.yearleft)}
-                                                onChange={this.handleAddYearL}
-                                                type="number"
-                                                min={1} step={1}
-                                    />
-                                </Form.Group>
+                                        <Form.Input required fluid label="year:"
+                                                    style={{width: '100px'}}
+                                                    value={parseInt(this.state.yearleft)}
+                                                    onChange={this.handleAddYearL}
+                                                    type="number"
+                                                    min={1978} step={2028}
+                                        />
+                                    </Form.Group>
                                 </Form.Field>
                             </Form.Group>
                             <Form.Field style={{textAlign: 'center', margin: '10%'}}>

@@ -44,7 +44,7 @@ contract ResumeVerifier {
     }
 
     struct JobRequest {
-        uint monthsworked;
+        string date;
         string position;
         uint SSN;
         address requester;
@@ -139,10 +139,9 @@ contract ResumeVerifier {
     //the user adds a job  to his cv and a job request to the company
     function addJob(string _monthhired, string _monthleft, string _yearhired, string _yearleft,  string _position, string _companyname, uint _SSN) public {
         require(useregistered[msg.sender]==true);
-        string memory date = _monthhired + "/"+_yearhired + '-' +_monthleft + "/"+ _yearleft;
-        string memory name = applicantinfo[msg.sender].name;
+        string memory date = string(abi.encodePacked(_monthhired, "/", _yearhired, '-',_monthleft, "/", _yearleft));
         JobRequest memory request = JobRequest(date, _position, _SSN, msg.sender, indexusersjobs[msg.sender], false);
-        Job memory job = Job(_monthsworked, _companyname, _position, false, false);
+        Job memory job = Job(date, _companyname, _position, false, false);
         address addr = companyname[_companyname];
         requestsJob[addr].push(request);
         jobs[msg.sender].push(job);
