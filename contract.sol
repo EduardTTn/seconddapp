@@ -73,9 +73,9 @@ contract ResumeVerifier {
         _;
     }
 
-    mapping(address => Applicant) applicantinfo;
-    mapping(address =>string)addresstoname;
-    mapping(address => bool)useregistered;
+    mapping(address => Applicant) applicantinfo;//user's address have a corresponding struct Applicant that contains basic info
+    mapping(address =>string)addresstoname;//the key is the user's address and the value is the name of the user
+    mapping(address => bool)useregistered;//checks if an a
     mapping(address => bool)institutionregistered;
     mapping(string => address)institutionname;
     mapping(string => address)companyname;
@@ -141,8 +141,8 @@ contract ResumeVerifier {
     function addJob(uint _monthsworked,  string _position, string _companyname, uint _SSN) public {
         require(useregistered[msg.sender]==true);
         string memory name = applicantinfo[msg.sender].name;
-        JobRequest memory request = JobRequest(_monthsworked, _position, _SSN, name, msg.sender, indexusersjobs[msg.sender], false, _yearhired, _yearleft);
-        Job memory job = Job(_monthsworked, _companyname, _position, false, false, _yearhired,  _yearleft);
+        JobRequest memory request = JobRequest(_monthsworked, _position, _SSN, msg.sender, indexusersjobs[msg.sender], false);
+        Job memory job = Job(_monthsworked, _companyname, _position, false, false);
         address addr = companyname[_companyname];
         requestsJob[addr].push(request);
         jobs[msg.sender].push(job);
@@ -223,7 +223,7 @@ contract ResumeVerifier {
     }
 
     //returns a job request for validation
-    function getJobRequest(address _addr, uint _index) public view returns (uint, string, uint, string,  uint, bool){
+    function getJobRequest(address _addr, uint _index) public view returns (uint, string, uint, address,  uint, bool){
         return(requestsJob[_addr][_index].monthsworked,  requestsJob[_addr][_index].position,  requestsJob[_addr][_index].SSN, requestsJob[_addr][_index].requester, requestsJob[_addr][_index].index, requestsJob[_addr][_index].verified);
     }
 
