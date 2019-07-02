@@ -25,22 +25,29 @@ class Register extends Component {
 
     //once the function is called and no errors are present, it will submit a request to the contract to call the register function of the contract
     onSubmit = async event => {
-        if (this.state.name === '' || this.state.location === '' || this.state.day === 0 || this.state.month === 0 || this.state.year === 0 || this.state.email === '') {
-            this.setState({errorMessage: "Fields can't be empty"});
-        } else if (this.state.day > 31 || this.state.day < 1) {
-            this.setState({errorMessage: "Invalid day"});
-        } else if (this.state.month > 12 || this.state.month < 1) {
-            this.setState({errorMessage: "Invalid month"});
-        } else if (this.state.year < 1920 || this.state.year > 2001) {
-            this.setState({errorMessage: "Invalid year"});
-        } else if (this.state.errorMessage === '') {
-            event.preventDefault();
-            this.setState({accounts: await web3.eth.getAccounts()});
-            this.setState({loading: true, errorMessage: ''});
-            await instance.methods.registerUser(this.state.name, this.state.day, this.state.month, this.state.year, this.state.location, this.state.email).send({
-                from: this.state.accounts[0]
-            });
+        try {
+            if (this.state.name === '' || this.state.location === '' || this.state.day === 0 || this.state.month === 0 || this.state.year === 0 || this.state.email === '') {
+                this.setState({errorMessage: "Fields can't be empty"});
+            } else if (this.state.day > 31 || this.state.day < 1) {
+                this.setState({errorMessage: "Invalid day"});
+            } else if (this.state.month > 12 || this.state.month < 1) {
+                this.setState({errorMessage: "Invalid month"});
+            } else if (this.state.year < 1920 || this.state.year > 2001) {
+                this.setState({errorMessage: "Invalid year"});
+            } else if (this.state.errorMessage === '') {
+                event.preventDefault();
+                this.setState({accounts: await web3.eth.getAccounts()});
+                this.setState({loading: true, errorMessage: ''});
+                await instance.methods.registerUser(this.state.name, this.state.day, this.state.month, this.state.year, this.state.location, this.state.email).send({
+                    from: this.state.accounts[0]
+                });
+            }
         }
+
+        catch(err){
+            if (err.message.includes('User denied')) {
+                this.setState({errorMessage: "Transaction Canceled"});
+            }        }
     };
 
     //handle methods are changing the states and prevent the default behaviour

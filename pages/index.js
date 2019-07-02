@@ -114,6 +114,9 @@ class Index extends Component {
                 this.setState({certificates: [...this.state.certificates, r]});
             }
         } catch (err) {
+            if (err.message.includes('User denied')) {
+                this.setState({errorMessage: "Transaction Canceled"});
+            }
             if (this.state.email === '')
                 this.setState({errorMessage: 'Field is Empty'});
 
@@ -129,8 +132,7 @@ class Index extends Component {
             const x = await instance.methods.getBasicInfo(this.state.address).call();
             if (x === null) {
                 this.setState({errorMessage: 'Address not registered'})
-            }
-                else {
+            } else {
                 this.setState({
                     info: x
                 });
@@ -146,12 +148,12 @@ class Index extends Component {
                 this.setState({certificates: [...this.state.certificates, r]});
             }
         } catch (err) {
+            if (err.message.includes('User denied')) {
+                this.setState({errorMessage: "Transaction Canceled"});
+            }
             if (err.message.includes('invalid address'))
                 this.setState({errorMessage: 'Invalid Address!'})
-
         }
-
-
     };
 
     //renders the certificates of an user in table rows

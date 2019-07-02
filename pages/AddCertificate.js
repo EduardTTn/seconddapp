@@ -52,20 +52,27 @@ class AddCertificate extends Component {
 
     //once the function is called and no errors are present, it will submit a request to the contract to call the addCertificate function of the contract
     onSubmit = async event => {
-        if (this.state.institutionname === '' || this.state.degree === '' || this.state.year === 0 || this.state.ID === '') {
-            this.setState({errorMessage: "Fields can't be empty"});
-        } else if (this.state.year < 1945 || this.state.day > 2099) {
-            this.setState({errorMessage: "Invalid Year"});
-        } else if (this.state.errorMessage === '') {
-            event.preventDefault();
-            this.setState({accounts: await web3.eth.getAccounts()});
-            this.setState({loading: true, errorMessage: ''});
-            await instance.methods.addCertificate(this.state.year, this.state.institutionname, this.state.degree, this.state.ID).send({
-                from: this.state.accounts[0]
-            });
+        try {
+            if (this.state.institutionname === '' || this.state.degree === '' || this.state.year === 0 || this.state.ID === '') {
+                this.setState({errorMessage: "Fields can't be empty"});
+            } else if (this.state.year < 1945 || this.state.day > 2099) {
+                this.setState({errorMessage: "Invalid Year"});
+            } else if (this.state.errorMessage === '') {
+                event.preventDefault();
+                this.setState({accounts: await web3.eth.getAccounts()});
+                this.setState({loading: true, errorMessage: ''});
+                await instance.methods.addCertificate(this.state.year, this.state.institutionname, this.state.degree, this.state.ID).send({
+                    from: this.state.accounts[0]
+                });
 
+            }
+        } catch (err) {
+            if (err.message.includes('User denied')) {
+                this.setState({errorMessage: "Transaction Canceled"});
+            }
         }
-    };
+    }
+
 
     render() {
         {

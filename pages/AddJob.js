@@ -51,18 +51,25 @@ class AddJob extends Component {
 
     //once the function is called and no errors are present, it will submit a request to the contract to call the addJob function of the contract
     onSubmit = async event => {
-        event.preventDefault();
-        if (this.state.companyname === '' || this.state.position === '' || this.state.monthsworked === 0 || this.state.SSN === 0 ) {
-            this.setState({errorMessage: "Fields can't be empty"});
-        } else if (this.state.SSN < 100000000 || this.state.day > 999999999) {
-            this.setState({errorMessage: "Invalid SSN"});
-        } else if (this.state.errorMessage === '') {
-            this.setState({loading: true});
-            this.setState({accounts: await web3.eth.getAccounts()});
-            await instance.methods.addJob(this.state.monthsworked, this.state.position, this.state.companyname, this.state.SSN).send({
-                from: this.state.accounts[0]
-            });
+        try {
+            event.preventDefault();
+            if (this.state.companyname === '' || this.state.position === '' || this.state.monthsworked === 0 || this.state.SSN === 0) {
+                this.setState({errorMessage: "Fields can't be empty"});
+            } else if (this.state.SSN < 100000000 || this.state.day > 999999999) {
+                this.setState({errorMessage: "Invalid SSN"});
+            } else if (this.state.errorMessage === '') {
+                this.setState({loading: true});
+                this.setState({accounts: await web3.eth.getAccounts()});
+                await instance.methods.addJob(this.state.monthsworked, this.state.position, this.state.companyname, this.state.SSN).send({
+                    from: this.state.accounts[0]
+                });
+            }
         }
+
+        catch(err){
+            if (err.message.includes('User denied')) {
+                this.setState({errorMessage: "Transaction Canceled"});
+            }        }
     };
 
     render() {

@@ -67,6 +67,9 @@ class Admin extends Component {
             })
 
         } catch (err) {
+            if (err.message.includes('User denied')) {
+                this.setState({errorMessage: "Transaction Canceled"});
+            }
             this.setState({loading: false});
             if (this.state.companyname === '' || this.state.companyaddress === '') {
                 this.setState({errorMessage1: "Fields can't be empty"});
@@ -88,6 +91,9 @@ class Admin extends Component {
                 from: this.state.accounts[0]
             })
         } catch (err) {
+            if (err.message.includes('User denied')) {
+                this.setState({errorMessage: "Transaction Canceled"});
+            }
             this.setState({loading: false});
             if (this.state.institutionname === '' || this.state.institutionaddress === '') {
                 this.setState({errorMessage2: "Fields can't be empty"});
