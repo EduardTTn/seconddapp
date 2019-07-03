@@ -321,7 +321,7 @@ class Index extends Component {
                                 <Button onClick={this.onSecondSubmit}
                                         color={"blue"}
                                         style={{width: '150px', height: '75px'}}
-                                >
+                                     >
                                     <Icon color='white' name='search'/>
                                 </Button>
                             </Form.Field>

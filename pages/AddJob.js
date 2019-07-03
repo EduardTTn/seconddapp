@@ -21,7 +21,8 @@ class AddJob extends Component {
             monthleft: 0,
             yearhired: 0,
             yearleft: 0,
-            SSN: 0
+            SSN: 0,
+            current: false
         };
     };
 
@@ -74,15 +75,22 @@ class AddJob extends Component {
         this.setState({errorMessage: ''});
     };
 
+    handleCurrentWork = event => {
+        event.preventDefault();
+        this.setState({current: !this.state.current})
+        this.setState({monthleft: ''});
+        this.setState({yearleft: ''})
+    }
+
     //once the function is called and no errors are present, it will submit a request to the contract to call the addJob function of the contract
     onSubmit = async event => {
         try {
             event.preventDefault();
             if (this.state.companyname === '' || this.state.position === '' || this.state.monthsworked === 0 || this.state.SSN === 0) {
                 this.setState({errorMessage: "Fields can't be empty"});
-            } else if (this.state.SSN < 100000000 || this.state.day > 999999999) {
+            } else if (this.state.SSN < 100000000 || this.state.SSN > 999999999) {
                 this.setState({errorMessage: "Invalid SSN"});
-            } else if (this.state.monthhired > this.state.monthleft && this.state.yearhired === this.state.yearleft) {
+            } else if (this.state.monthhired > this.state.monthleft && this.state.yearhired === this.state.yearleft && this.state.current === false) {
                 this.setState({errorMessage: "Invalid Period"});
             } else if (this.state.errorMessage === '') {
                 this.setState({loading: true});
@@ -96,7 +104,7 @@ class AddJob extends Component {
             if (err.message.includes('User denied')) {
                 this.setState({errorMessage: "Transaction Canceled"});
             }
-            if (this.state.yearhired > this.state.yearleft) {
+            if (this.state.yearhired > this.state.yearleft && this.state.current === false) {
                 this.setState({errorMessage: "Invalid Period"});
             }
         }
@@ -196,22 +204,36 @@ class AddJob extends Component {
                                     <Form.Group>
                                         <label style={{margin: '4%'}}>Date Left:</label>
                                         <Form.Input required fluid label="month:"
+                                                    disabled={this.state.current}
                                                     style={{width: '100px'}}
                                                     value={parseInt(this.state.monthleft)}
                                                     onChange={this.handleAddMonthL}
                                                     type="number"
                                                     min={1} max={31} step={1}
+                                                    error={!!this.state.errorMessage}
                                         />
 
                                         <Form.Input required fluid label="year:"
                                                     style={{width: '100px'}}
+                                                    disabled={this.state.current}
                                                     value={parseInt(this.state.yearleft)}
                                                     onChange={this.handleAddYearL}
                                                     type="number"
                                                     min={1978} max={2029} step={1}
+                                                    error={!!this.state.errorMessage}
                                         />
+
                                     </Form.Group>
+                                    <Form.Checkbox  fluid label="Check if you are curently working"
+                                                   style={{width: '65%'}}
+                                                   value={this.state.current}
+                                                   onChange={this.handleCurrentWork}
+                                                   type="checkbox"
+                                                   min={1978} max={2029} step={1}
+                                    />
                                 </Form.Field>
+
+
                             </Form.Group>
                             <Form.Field style={{textAlign: 'center', margin: '10%'}}>
                                 <Button style={{width: '30%', height: '50px'}} onClick={this.onSubmit} color={"blue"}
@@ -220,6 +242,7 @@ class AddJob extends Component {
                                 </Button>
                             </Form.Field>
                         </Form>
+
                     </Card>
                     {/*if an operation started the state will change to true and the snackbar will appear */}
                     <div>{this.state.loading === true ? <SimpleSnackbar/> : null}</div>
